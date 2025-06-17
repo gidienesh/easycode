@@ -2,6 +2,14 @@
 
 This service is responsible for managing tenant (client organization/company) accounts, their specific configurations, and their entitlements to various services and modules within the EasyCode platform.
 
+The `tenant-service` is designed to operate in both deployment models of the EasyCode platform's hybrid tenancy architecture:
+- In the **shared multi-tenant environment**, it manages the configurations, settings, and ensures data isolation for numerous distinct client tenants.
+- In **dedicated client instances**, an instance of `tenant-service` typically runs to manage the configuration for that single enterprise (as a "super-tenant"), maintaining architectural consistency.
+
+It receives the high-level service entitlements for a tenant (i.e., which EasyCode services are active) based on configurations set by EasyCode administrators via the `client-admin-service`.
+
+For more details on the overall tenancy and deployment strategy, see the [Hybrid Multi-Tenancy & Deployment Strategy](../../docs/architecture/hybrid-tenancy-and-deployment.md).
+
 ## Core Responsibilities
 -   **Tenant Lifecycle Management**: Creating, updating, activating/deactivating tenant accounts.
 -   **Tenant Configuration**: Storing and serving tenant-specific settings, preferences, and customizations.
