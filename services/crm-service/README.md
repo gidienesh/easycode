@@ -114,3 +114,13 @@ To manage leads, contacts, accounts (organizations/companies), sales activities,
 -   Integration marketplace/settings for third-party tools
 
 This service will integrate with `user-service` for authentication/authorization, `notification-service` for dispatching certain types of system alerts (though many communications will be direct via its own modules), and `tenant-service` for data isolation.
+
+## Potential AI Enhancements
+The `crm-service` is planned to incorporate several AI-driven features to enhance its capabilities. These include:
+-   **Predictive Lead Scoring**: To help sales teams prioritize leads.
+-   **Sales Forecast Automation & Deal Insights**: For more accurate forecasting and actionable deal intelligence.
+-   **Customer Sentiment Analysis**: To understand customer sentiment from communications.
+-   **Intelligent Product/Service Recommendations**: To assist with cross-selling and upselling.
+-   **Automated Communication Summarization**: To quickly digest long text communications and extract action items.
+
+For more details on the overall AI strategy and infrastructure, see the [AI Integration Strategy](../../docs/architecture/ai-integration-strategy.md).

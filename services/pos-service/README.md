@@ -110,4 +110,12 @@ To manage all aspects of point-of-sale operations, including cart management, tr
 -   `notification-service`: Sending e-receipts.
 -   Payment Gateways: For card processing.
 -   KDS, Booking Systems (for specific verticals).
+
+## Potential AI Enhancements
+AI features planned for the `pos-service` aim to optimize sales, reduce risk, and improve local operational insights:
+-   **Dynamic Pricing/Personalized Promotion Suggestions**: Real-time offers at the point of sale.
+-   **Real-Time Transaction Fraud Detection**: To flag and manage suspicious transactions.
+-   **AI-Assisted Demand Forecasting (Local)**: To predict item demand for specific POS locations, aiding inventory management.
+
+For more details on the overall AI strategy and infrastructure, see the [AI Integration Strategy](../../docs/architecture/ai-integration-strategy.md).
 ```
