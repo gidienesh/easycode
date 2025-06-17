@@ -35,5 +35,6 @@ This monorepo hosts a suite of backend microservices. Here's a brief overview of
 - **Client Administration Service (`services/client-admin-service/`)**: An internal service for EasyCode staff to manage business client accounts, subscriptions, and configurations.
 - **Project Management Service (`services/project-management-service/`)**: For planning, executing, and tracking projects, suitable for both internal EasyCode use and by clients for their own project management needs.
 - **Equipment Maintenance Service (`services/equipment-maintenance-service/`)**: For managing equipment assets, scheduling preventive and corrective maintenance, tracking service history, and utilizing configurable checklists for maintenance procedures.
+- **Procurement Service (`services/procurement-service/`)**: Manages the full Procure-to-Pay (P2P) lifecycle, from internal requisitions, supplier management, sourcing, and contracting, through purchase order management, receiving, invoice processing coordination, and spend analytics.
 
 (Note: The list of services will evolve. Refer to the `services/` directory and individual service READMEs for the most up-to-date details.)

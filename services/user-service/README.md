@@ -18,8 +18,24 @@ User permissions are computed based on assigned roles and the overall entitlemen
 -   **Capabilities**: Manage users (invite, activate/deactivate, assign roles) *within their own tenant*. They operate within the scope of services/modules their company is entitled to.
 
 ### Roles & Permissions Structure
--   Roles (e.g., "CRM Manager") are defined with associated granular permissions (e.g., `crm:lead:create`).
+-   Roles are defined with associated granular permissions. The actual permissions (e.g., `crm:lead:create`, `inventory:item:edit`) are defined by the services that own the resources.
+-   `user-service` stores role definitions and assignments to users.
 -   A user's *effective permissions* are an intersection of their roles' permissions and their tenant's enabled services/modules (obtained from `tenant-service`). For example, if a user has the "CRM Manager" role but their tenant is not entitled to the `crm-service`, they will not have any CRM-related permissions.
+
+#### Example System-Wide & Service-Specific Roles:
+-   **System Roles**:
+    -   `tenant_admin`: Manages users and role assignments within their own tenant, within the scope of tenant entitlements.
+-   **CRM Roles (Managed by `crm-service` logic, assigned via `user-service` UI/API)**:
+    -   `SalesRepresentative`: Can manage leads, contacts, opportunities they own.
+    -   `SalesManager`: Can view/manage team's sales data, approve discounts.
+    -   `MarketingUser`: Can create and manage campaigns.
+-   **Procurement Roles (Managed by `procurement-service` logic, assigned via `user-service` UI/API)**:
+    -   `Requisitioner`: Can create purchase requisitions.
+    -   `ProcurementApproverTier1`: Can approve requisitions/POs up to a certain value.
+    -   `ProcurementOfficer`: Can manage POs, RFx, and suppliers.
+    -   `ReceivingClerk`: Can record goods receipts.
+    -   `SupplierManager`: Can manage supplier master data.
+-   *(Other services like `inventory-service`, `finance-service` would also define roles relevant to their domain, e.g., `InventoryClerk`, `Accountant`).*
 
 ### API for Offline Synchronization & Server-Side Checks
 -   **Endpoint**: `GET /api/users/me/effective-permissions` (authenticates via token to derive user and tenant context).
