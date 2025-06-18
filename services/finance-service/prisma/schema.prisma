@@ -1,0 +1,93 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum AccountType {
+  ASSET
+  LIABILITY
+  EQUITY
+  REVENUE
+  EXPENSE
+  COST_OF_GOODS_SOLD
+}
+
+model ChartOfAccount {
+  id                 String             @id @default(cuid())
+  accountCode        String
+  accountName        String
+  accountType        AccountType
+  parentId           String?
+  parent             ChartOfAccount?    @relation("AccountHierarchy", fields: [parentId], references: [id])
+  children           ChartOfAccount[]   @relation("AccountHierarchy")
+  hierarchyLevel     Int                @default(0)
+  isActive           Boolean            @default(true)
+  tenantId           String
+  journalEntryLines  JournalEntryLine[] // Relation to JournalEntryLine
+
+  @@index([tenantId, accountCode], name: "tenant_account_code_idx")
+}
+
+enum JournalEntryStatus {
+  DRAFT
+  POSTED
+  REVERSED
+}
+
+model JournalEntry {
+  id          String             @id @default(cuid())
+  entryDate   DateTime           @default(now())
+  description String
+  tenantId    String
+  status      JournalEntryStatus @default(DRAFT)
+  lines       JournalEntryLine[]
+  createdAt   DateTime           @default(now())
+  updatedAt   DateTime           @updatedAt
+
+  @@index([tenantId, status])
+}
+
+model JournalEntryLine {
+  id                  String          @id @default(cuid())
+  journalEntryId      String
+  journalEntry        JournalEntry    @relation(fields: [journalEntryId], references: [id], onDelete: Cascade)
+  chartOfAccountId    String
+  chartOfAccount      ChartOfAccount  @relation(fields: [chartOfAccountId], references: [id])
+  debit               Decimal         @default(0.00)
+  credit              Decimal         @default(0.00)
+  description         String?
+  financialDimensions Json?           // Stores selected key-value pairs like {"Department": "Sales", "Project": "Alpha"}
+
+  @@index([journalEntryId])
+  @@index([chartOfAccountId])
+}
+
+model FinancialDimension {
+  id            String                    @id @default(cuid())
+  name          String                    // E.g., "Department", "Project", "Region"
+  description   String?
+  tenantId      String
+  isActive      Boolean                   @default(true)
+  definedValues FinancialDimensionValue[] // Predefined possible values for this dimension
+  createdAt     DateTime                  @default(now())
+  updatedAt     DateTime                  @updatedAt
+
+  @@unique([tenantId, name])
+}
+
+model FinancialDimensionValue {
+  id                   String             @id @default(cuid())
+  financialDimensionId String
+  financialDimension   FinancialDimension @relation(fields: [financialDimensionId], references: [id], onDelete: Cascade)
+  value                String             // E.g., "Sales", "Marketing", "Project Alpha"
+  description          String?
+  isActive             Boolean            @default(true)
+  createdAt            DateTime           @default(now())
+  updatedAt            DateTime           @updatedAt
+
+  @@unique([financialDimensionId, value])
+}
