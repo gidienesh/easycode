@@ -10,6 +10,8 @@ The `tenant-service` is a cornerstone of the EasyCode platform's hybrid tenancy 
 
 It receives the high-level service entitlements for a tenant (i.e., which EasyCode services are active) based on configurations set by EasyCode administrators via the `client-admin-service`.
 
+**New:** The platform now supports an internal admin workflow for feature selection, quotation, payment, trial management, promotions, and affiliate agent tracking, enabling a streamlined sales and onboarding process for tenants.
+
 For more details on the overall tenancy and deployment strategy, see the [Hybrid Multi-Tenancy & Deployment Strategy](../../docs/architecture/hybrid-tenancy-and-deployment.md).
 
 ## 2. Tech Stack
@@ -58,6 +60,17 @@ Built with TypeScript and Node.js, leveraging Turborepo for monorepo management.
 ### 3.5. Data Isolation Assurance
 1.  **Tenant Context Propagation**: While not directly enforcing data separation (which is the responsibility of individual data-handling services), `tenant-service` provides the definitive `tenantId` that is crucial for other services to filter and scope data correctly.
 2.  **Configuration for Isolation Strategies**: May store configuration details related to a tenant's specific data isolation needs if more complex than simple `tenantId` filtering (e.g., dedicated database connection strings for certain enterprise tenants, though this is rare in a typical SaaS multi-tenant model).
+
+### 3.6. Internal Admin Workflow: Feature Selection, Quotation, Payment, Trials, Promotions, and Affiliates
+1.  **Feature Checklist for Admins**: Internal administrators use a checklist interface to select and configure the specific features and modules requested by each tenant during onboarding or upgrade.
+2.  **Quotation Generation**: Based on the selected features, the system generates a detailed quotation for the tenant, outlining costs and included modules/services.
+3.  **Payment & Activation**: Once payment is confirmed, the selected features are activated for the tenant, updating their entitlements in the system. Trial and promotional features can be enabled with specific time limits or conditions.
+4.  **Trial Management**: Admins can assign trial periods for certain features or modules, after which access is automatically restricted unless payment is made.
+5.  **Promotions & Discounts**: The workflow supports applying promotional codes or discounts to the quotation, with tracking for reporting and analytics.
+6.  **Affiliate Agent Tracking**: If a tenant is referred by an affiliate agent, this relationship is recorded, and commissions or rewards can be tracked and reported.
+7.  **Audit & History**: All admin actions (feature selection, quotation, payment, trial assignment, promotions, affiliate links) are logged for compliance and support purposes.
+
+This workflow ensures a seamless, auditable, and flexible process for onboarding tenants, managing upsells, and supporting marketing and affiliate programs.
 
 ## 4. Key Integration Points with Other Services
 

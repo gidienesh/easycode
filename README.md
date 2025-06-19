@@ -17,7 +17,7 @@ To provide customers with precisely tailored software solutions by assembling mo
 
 ## Technology Stack
 The EasyCode platform leverages a modern, robust technology stack:
--   **Next.js**: For building performant frontend applications.
+-   **Next.js (with TypeScript)**: For building performant, type-safe frontend applications. All frontend code is written in TypeScript, not plain JavaScript or React alone.
 -   **OpenNext/Cloudflare**: For deployment, and leveraging edge capabilities for optimal performance and scalability.
 -   **TypeScript**: Across both frontend and backend for type safety and improved developer experience.
 -   **Node.js**: For developing efficient and scalable backend microservices.
@@ -26,7 +26,7 @@ The EasyCode platform leverages a modern, robust technology stack:
 
 ## Frontend Architecture Highlight: Shared UI Strategy
 
-A key aspect of our frontend strategy is the centralized shared UI component library located in `apps/main-ui/`. This library is built with Mantine UI, Next.js, and TypeScript.
+A key aspect of our frontend strategy is the centralized shared UI component library located in `apps/main-ui/`. This library is built with **Next.js (React framework) and TypeScript**—not plain JavaScript or React alone.
 
 **Role and Importance of `apps/main-ui/`:**
 -   **Source of Truth**: It serves as the single source of truth for reusable UI components (buttons, forms, layout elements, etc.).
@@ -34,7 +34,7 @@ A key aspect of our frontend strategy is the centralized shared UI component lib
 -   **Accelerated Development**: Speeds up frontend development by providing developers with pre-built, well-tested, and documented UI building blocks.
 -   **Maintainability**: Centralizing shared components simplifies updates, bug fixes, and style revisions, ensuring changes are propagated efficiently.
 
-All frontend applications, whether dedicated frontends for specific microservices (like `services/finance-service/`) or broader applications, are encouraged to consume components from `apps/main-ui/` to maintain coherence and development velocity.
+All frontend applications, whether dedicated frontends for specific microservices (like `services/finance-service/`) or broader applications, are built with **Next.js and TypeScript** and are encouraged to consume components from `apps/main-ui/` to maintain coherence and development velocity.
 
 ## Available Services
 This monorepo hosts a suite of backend microservices, each designed to handle specific business domains while integrating seamlessly to provide comprehensive solutions. These services share data and trigger workflows across the platform, enabling a cohesive and powerful user experience.

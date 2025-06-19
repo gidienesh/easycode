@@ -7,14 +7,14 @@
     "strict": true,
     "skipLibCheck": true,
     "resolveJsonModule": true,
-    "declaration": true,
-    "noEmit": true,
-    "composite": true,
     "baseUrl": ".",
     "paths": {
       "@easycode/*": ["services/*"],
       "@easycode-pkgs/*": ["packages/*"]
-    }
+    },
+    "jsx": "react-jsx",
+    "typeRoots": ["./node_modules/@types"]
   },
+  "include": ["**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules", "dist"]
 }
