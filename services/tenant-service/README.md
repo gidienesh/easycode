@@ -1,43 +1,83 @@
 # Tenant Service (@easycode/tenant-service)
 
-This service is responsible for managing tenant (client organization/company) accounts, their specific configurations, and their entitlements to various services and modules within the EasyCode platform.
+## 1. Service Overview
 
-The `tenant-service` is designed to operate in both deployment models of the EasyCode platform's hybrid tenancy architecture:
-- In the **shared multi-tenant environment**, it manages the configurations, settings, and ensures data isolation for numerous distinct client tenants.
-- In **dedicated client instances**, an instance of `tenant-service` typically runs to manage the configuration for that single enterprise (as a "super-tenant"), maintaining architectural consistency.
+Manages tenant (client organization) accounts, including their lifecycle, configurations, and entitlements to various services and modules within the EasyCode platform.
+
+The `tenant-service` is a cornerstone of the EasyCode platform's hybrid tenancy architecture:
+-   In the **shared multi-tenant environment**, it manages the configurations, settings, and ensures data isolation for numerous distinct client tenants.
+-   In **dedicated client instances**, an instance of `tenant-service` typically runs to manage the configuration for that single enterprise (as a "super-tenant"), maintaining architectural consistency.
 
 It receives the high-level service entitlements for a tenant (i.e., which EasyCode services are active) based on configurations set by EasyCode administrators via the `client-admin-service`.
 
 For more details on the overall tenancy and deployment strategy, see the [Hybrid Multi-Tenancy & Deployment Strategy](../../docs/architecture/hybrid-tenancy-and-deployment.md).
 
-## Core Responsibilities
--   **Tenant Lifecycle Management**: Creating, updating, activating/deactivating tenant accounts.
--   **Tenant Configuration**: Storing and serving tenant-specific settings, preferences, and customizations.
--   **Data Isolation**: Ensuring that each tenant's data is logically (and potentially physically) separated.
--   **Tenant Entitlement Management**: Storing and serving the authoritative list of services and modules a tenant is permitted to access.
+## 2. Tech Stack
 
-## Tenant Entitlement Management & Offline Sync
+Built with TypeScript and Node.js, leveraging Turborepo for monorepo management. It's designed for deployment on cloud infrastructure, compatible with strategies like OpenNext/Cloudflare for relevant parts of the ecosystem.
 
-This service stores the authoritative list of services and major modules a tenant (client company) is entitled to access, as configured by EasyCode administrators via the `client-admin-service`.
+## 3. Core Features and Capabilities
 
-### Entitlement Storage
--   Entitlements are stored within the tenant's configuration data.
--   Example structure:
-    ```json
-    "entitlements": {
-      "enabledServices": ["crm-service", "inventory-service"],
-      "enabledModules": {
-        "crm-service": ["sales_pipeline"]
-      },
-      "version": "tenant-version-id" // For cache control
-    }
-    ```
+### 3.1. Tenant Lifecycle Management
+1.  **Tenant Onboarding**: Creating new tenant accounts, typically initiated by the `client-admin-service`. This includes generating unique tenant IDs and setting up initial configurations.
+2.  **Tenant Activation & Deactivation**: Managing the status of tenant accounts (e.g., active, suspended, trial). Deactivated tenants may have restricted access or data archival processes.
+3.  **Tenant Offboarding**: Processes for permanently removing a tenant and their data from the system, including data deletion or archival according to policy.
+4.  **Tenant Updates**: Modifying core tenant information (e.g., company name, primary contact).
 
-### API for Offline Synchronization & Server-Side Checks
--   **Endpoint**: `GET /api/tenants/{tenantId}/entitlements`
--   **Purpose**: Allows client applications to fetch tenant-level entitlements for offline storage and UI rendering. Also used by other backend services or API gateways for validation.
--   **Response**: Returns the `entitlements` object as shown above.
--   **Security**: Endpoint is secured; accessible only to authenticated users of the tenant or authorized services.
--   **Caching**: Uses ETags or versioning to support client-side caching and conditional requests.
+### 3.2. Tenant Configuration Management
+1.  **Centralized Settings Storage**: Stores and serves tenant-specific settings, preferences, and customizations that other services rely on.
+2.  **Custom Fields & Extensibility**: (Future) Support for tenants defining custom fields or extending data models for certain services.
+3.  **Branding Customization**: Store tenant-specific branding elements (e.g., logos, color schemes) that can be applied to UIs or communications.
+4.  **Regional Settings**: Manage tenant-specific regional settings like timezone, language defaults, and currency defaults.
 
-(Further details on other responsibilities like tenant lifecycle and general configuration will be added.)
+### 3.3. Service Entitlement Management
+1.  **Authoritative Entitlement Store**: Stores and serves the definitive list of services, features, and modules a tenant is permitted to access, based on their subscription level (configured via `client-admin-service`).
+2.  **Granular Control**: Allows for enabling/disabling specific services (e.g., `crm-service`, `inventory-service`) or even sub-modules/features within those services.
+3.  **API for Entitlement Checks**:
+    -   **Endpoint Example**: `GET /api/tenants/{tenantId}/entitlements`
+    -   **Purpose**: Allows client applications to fetch tenant-level entitlements for UI rendering (e.g., showing/hiding menu items) and offline storage. Also used by other backend services or API gateways for validating access to service functionalities.
+    -   **Response Example**:
+        ```json
+        {
+          "entitlements": {
+            "enabledServices": ["crm-service", "inventory-service"],
+            "enabledModules": {
+              "crm-service": ["sales_pipeline", "marketing_campaigns"],
+              "inventory-service": ["basic_stock_tracking"]
+            },
+            "version": "tenant-entitlement-version-id" // For cache control
+          }
+        }
+        ```
+    -   **Security & Caching**: The endpoint is secured, accessible only to authenticated users of the tenant or authorized services. It utilizes ETags or versioning to support client-side caching.
+
+### 3.4. Domain & Subdomain Management (If Applicable)
+1.  **Custom Domain Mapping**: (Future) For tenants who wish to use their own custom domains for accessing the platform.
+2.  **Subdomain Provisioning**: Manage unique subdomains for tenants (e.g., `clientcompany.easycode.com`).
+
+### 3.5. Data Isolation Assurance
+1.  **Tenant Context Propagation**: While not directly enforcing data separation (which is the responsibility of individual data-handling services), `tenant-service` provides the definitive `tenantId` that is crucial for other services to filter and scope data correctly.
+2.  **Configuration for Isolation Strategies**: May store configuration details related to a tenant's specific data isolation needs if more complex than simple `tenantId` filtering (e.g., dedicated database connection strings for certain enterprise tenants, though this is rare in a typical SaaS multi-tenant model).
+
+## 4. Key Integration Points with Other Services
+
+The `tenant-service` is a foundational service, primarily consumed by other services to ensure they operate correctly within a tenant's context and entitlements.
+
+-   **`user-service`**:
+    -   `user-service` queries `tenant-service` to validate tenant existence and status when associating users with a tenant.
+    -   `tenant-service` informs `user-service` about a tenant's service/module entitlements, which `user-service` might use in conjunction with its own role/permission system to calculate effective user permissions.
+-   **`client-admin-service`**:
+    -   This is the primary administrative interface for creating, managing, and configuring tenants and their high-level entitlements. `client-admin-service` calls `tenant-service` APIs to persist these settings.
+
+-   **All Other Business Logic Services** (e.g., `crm-service`, `finance-service`, `hr-service`, `pos-service`, `inventory-service`, `project-management-service`, `logistics-service`, etc.):
+    -   These services query `tenant-service` at startup or on-demand to fetch tenant-specific configurations (e.g., "What are the custom invoice templates for tenant X?", "What are the specific HR policies for tenant Y?").
+    -   They rely on `tenant-service` to confirm that a requested operation or data access is within the tenant's entitled scope of services and modules.
+    -   All services use the `tenantId` (often obtained via JWT or request context, validated against `tenant-service`) to ensure strict data isolation in their respective databases and operations.
+
+-   **`notification-service`**:
+    -   May be triggered by `tenant-service` to send notifications regarding significant tenant lifecycle events (e.g., trial period ending, subscription changes, deactivation confirmation).
+    -   `notification-service` itself queries `tenant-service` for tenant-specific branding or contact preferences when sending notifications on behalf of other services.
+
+## 5. Frontend & UI Consumption
+
+Primarily a backend service, `tenant-service` provides crucial data for data isolation and configuration to all other services and applications. Any UI for managing tenant configurations directly (beyond what `client-admin-service` offers) would typically be part of a super-administrative interface, potentially using components from `apps/main-ui/`. End-user applications consume tenant configurations indirectly through the business logic services they interact with.
