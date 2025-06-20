@@ -1,11 +1,42 @@
 import React, { useState } from 'react';
-import dynamic from 'next/dynamic';
-import { Button, Group, Container, Title } from '@mantine/core';
+import { Container, Title, Group, Button, Stack, Text, Badge } from '@mantine/core';
+import { useTenantTheme } from '@easycode-pkgs/ui-library/src';
 
-// Dynamically import the tenant-service UI components
-const TenantListPage = dynamic(() => import('../../services/tenant-service/src/ui/TenantListPage'), { ssr: false });
-const TenantOnboardingPage = dynamic(() => import('../../services/tenant-service/src/ui/TenantOnboardingPage'), { ssr: false });
-const TenantDetailsPage = dynamic(() => import('../../services/tenant-service/src/ui/TenantDetailsPage'), { ssr: false });
+
+// Mock components for demo - replace with actual implementations
+const TenantListPage = ({ onViewTenant }: { onViewTenant: (id: string) => void }) => (
+  <Stack>
+    <Title order={2}>Tenant List</Title>
+    <Group>
+      <Button onClick={() => onViewTenant('tenant-1')}>View TechCorp</Button>
+      <Button onClick={() => onViewTenant('tenant-2')}>View GreenCorp</Button>
+      <Button onClick={() => onViewTenant('tenant-3')}>View DarkCorp</Button>
+    </Group>
+  </Stack>
+);
+
+const TenantOnboardingPage = () => (
+  <Stack>
+    <Title order={2}>Tenant Onboarding</Title>
+    <Text>Onboarding form would go here...</Text>
+  </Stack>
+);
+
+const TenantDetailsPage = ({ tenantId }: { tenantId: string }) => {
+  const { currentTheme, setTenantId } = useTenantTheme();
+  
+  return (
+    <Stack>
+      <Title order={2}>Tenant Details: {tenantId}</Title>
+      <Group>
+        <Badge color={currentTheme.primaryColor}>Current Theme: {currentTheme.name}</Badge>
+        <Button onClick={() => setTenantId('tenant-1')}>Switch to TechCorp</Button>
+        <Button onClick={() => setTenantId('tenant-2')}>Switch to GreenCorp</Button>
+        <Button onClick={() => setTenantId('tenant-3')}>Switch to DarkCorp</Button>
+      </Group>
+    </Stack>
+  );
+};
 
 export default function TenantDemo() {
   const [view, setView] = useState<'list' | 'onboard' | 'details'>('list');

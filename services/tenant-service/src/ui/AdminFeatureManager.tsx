@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Group, Card, Title } from '@mantine/core';
-// Import shared UI components from main-ui as needed
-// import { Card, Button } from '@easycode/main-ui';
+import { Button, Group, Card, Title } from '@easycode/ui-library';
 
 import FeatureChecklist from './FeatureChecklist';
 import QuotationSummary from './QuotationSummary';

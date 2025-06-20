@@ -12,9 +12,7 @@
       "@easycode/*": ["services/*"],
       "@easycode-pkgs/*": ["packages/*"]
     },
-    "jsx": "react-jsx",
-    "typeRoots": ["./node_modules/@types"]
+    "jsx": "react-jsx"
   },
-  "include": ["**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules", "dist"]
 }

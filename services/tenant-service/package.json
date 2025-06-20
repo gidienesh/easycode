@@ -12,12 +12,7 @@
     "test": "jest --coverage"
   },
   "dependencies": {
-    "@faker-js/faker": "^9.8.0",
-    "@mantine/core": "^8.1.1",
-    "@types/react": "^19.1.8",
-    "dotenv": "^10.0.0",
-    "express": "^4.17.1",
-    "react": "^19.1.0"
+    "@easycode/ui-library": "workspace:*"
   },
   "devDependencies": {
     "@types/express": "^4.17.13",
