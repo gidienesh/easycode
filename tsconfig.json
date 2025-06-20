@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "es2022",
-    "module": "ESNext",
+    "module": "commonjs",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
@@ -10,15 +10,9 @@
     "baseUrl": ".",
     "paths": {
       "@easycode/*": ["services/*"],
-      "@easycode-pkgs/*": ["packages/*"],
-      "@tenant-service/*": ["services/tenant-service/src/*"],
-      "@tenant-ui/*": ["services/tenant-service/src/ui/*"]
+      "@easycode-pkgs/*": ["packages/*"]
     },
-    "jsx": "react-jsx",
-    "declaration": true,
-    "composite": true,
-    "sourceMap": true,
-    "moduleResolution": "NodeNext"
+    "jsx": "react-jsx"
   },
   "exclude": ["node_modules", "dist"]
 }
