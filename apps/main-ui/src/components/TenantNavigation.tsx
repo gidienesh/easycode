@@ -90,6 +90,7 @@ import {
   IconEye,
   IconAlertCircle
 } from '@tabler/icons-react';
+import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import { useTenant } from '../providers/TenantProvider';
 import { useUser } from '../providers/UserProvider';
@@ -320,7 +321,7 @@ export function TenantNavigation({ opened, onToggle }: NavigationProps) {
   const [expandedServices, setExpandedServices] = useState<string[]>([]);
   const theme = useMantineTheme();
   const router = useRouter();
-  const pathname = router.asPath;
+  const pathname = router.asPath; // router.pathname is generally preferred for active checks with dynamic routes
   
   if (loading) {
     return (
@@ -373,18 +374,17 @@ export function TenantNavigation({ opened, onToggle }: NavigationProps) {
     });
   };
 
-  const handleNavigation = (href: string) => {
-    // Use Next.js router for client-side navigation (no page reload)
-    router.push(href);
-    
+  const handleNavigation = (href?: string) => { // href is optional now as NextLink will handle it
     // Close mobile menu after navigation
-    if (window.innerWidth < 768) {
+    // Check for window object to ensure it's client-side
+    if (typeof window !== 'undefined' && window.innerWidth < 768) {
       onToggle();
     }
   };
 
   const isActive = (href: string) => {
-    return pathname === href || pathname.startsWith(href + '/');
+    // For more robust active state, especially with dynamic routes, consider router.pathname
+    return pathname === href || pathname.startsWith(href + '/') || (href !== '/' && pathname.startsWith(href));
   };
 
   return (
@@ -455,11 +455,9 @@ export function TenantNavigation({ opened, onToggle }: NavigationProps) {
               label={item.label}
               leftSection={<item.icon size="1.2rem" stroke={1.5} />}
               href={item.href}
+              component={NextLink}
               active={isActive(item.href)}
-              onClick={(e) => {
-                e.preventDefault();
-                handleNavigation(item.href);
-              }}
+              onClick={() => handleNavigation()}
               color={item.color}
             />
           ))}
@@ -492,18 +490,22 @@ export function TenantNavigation({ opened, onToggle }: NavigationProps) {
                     ) : null
                   }
                   color={serviceInfo.color}
-                  active={isServiceActive}
+                  active={isServiceActive && !hasFeatures} // Only active if no features to expand
                   onClick={(e) => {
-                    e.preventDefault();
                     if (hasFeatures) {
+                      e.preventDefault(); // Prevent navigation if it's an expandable parent
                       toggleService(service.name);
                     } else {
-                      handleNavigation(servicePath);
+                      // For NavLink as NextLink, onClick still fires.
+                      // We call handleNavigation to close mobile menu if needed.
+                      handleNavigation();
                     }
                   }}
                   style={{
                     cursor: 'pointer'
                   }}
+                  // Conditionally add NextLink if it's a direct link
+                  {...(!hasFeatures && { component: NextLink, href: servicePath })}
                 />
                 
                 {hasFeatures && (
@@ -515,11 +517,9 @@ export function TenantNavigation({ opened, onToggle }: NavigationProps) {
                           label={feature.name}
                           leftSection={<feature.icon size="1rem" stroke={1.5} />}
                           href={feature.href}
+                          component={NextLink}
                           active={isActive(feature.href)}
-                          onClick={(e) => {
-                            e.preventDefault();
-                            handleNavigation(feature.href);
-                          }}
+                          onClick={() => handleNavigation()}
                           color={serviceInfo.color}
                           variant="light"
                         />
@@ -567,7 +567,12 @@ export function TenantNavigation({ opened, onToggle }: NavigationProps) {
 export function MobileHeader({ opened, onToggle }: NavigationProps) {
   const { tenant } = useTenant();
   const { user } = useUser();
-  const router = useRouter();
+  const router = useRouter(); // Keep router for programmatic navigation if needed elsewhere
+
+  // MobileHeader navigation ActionIcons are fine with router.push as they are not standard links.
+  // No changes needed here unless we want to convert them to NextLink wrapped ActionIcons,
+  // which is possible but not strictly necessary if current behavior is fine.
+  // For consistency, one might do it, but router.push is perfectly valid for event-driven navigation.
 
   return (
     <AppShell.Header p="md">
@@ -575,7 +580,7 @@ export function MobileHeader({ opened, onToggle }: NavigationProps) {
         <Group>
           <Burger
             opened={opened}
-            onClick={onToggle}
+            onClick={onToggle} // This toggles the mobile navbar, not navigation
             size="sm"
             color="gray"
           />
@@ -594,7 +599,9 @@ export function MobileHeader({ opened, onToggle }: NavigationProps) {
             <ActionIcon 
               variant="light" 
               size="md"
-              onClick={() => router.push('/dashboard')}
+              component={NextLink}
+              href="/dashboard"
+              aria-label="Dashboard"
             >
               <IconDashboard size="1rem" />
             </ActionIcon>
@@ -604,7 +611,9 @@ export function MobileHeader({ opened, onToggle }: NavigationProps) {
             <ActionIcon 
               variant="light" 
               size="md"
-              onClick={() => router.push('/settings')}
+              component={NextLink}
+              href="/settings"
+              aria-label="Settings"
             >
               <IconSettings size="1rem" />
             </ActionIcon>
@@ -613,4 +622,4 @@ export function MobileHeader({ opened, onToggle }: NavigationProps) {
       </Group>
     </AppShell.Header>
   );
-} 
+}
