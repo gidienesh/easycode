@@ -1,10 +1,24 @@
-import { RouteObject } from 'react-router-dom';
-import TenantServiceTestPage from '../pages/admin/TenantServiceTest';
+// Admin routes configuration for EasyCode Platform
+// This file defines the admin routes structure
 
-export const adminRoutes: RouteObject[] = [
-    // ... existing routes
+export interface AdminRoute {
+    path: string;
+    name: string;
+    description: string;
+    component?: string;
+}
+
+export const adminRoutes: AdminRoute[] = [
     {
         path: '/admin/tenant-service-test',
-        element: <TenantServiceTestPage />,
+        name: 'Tenant Service Test',
+        description: 'Test tenant service functionality',
+        component: 'TenantServiceTest'
     },
+    {
+        path: '/admin/dashboard',
+        name: 'Admin Dashboard',
+        description: 'Main admin dashboard',
+        component: 'AdminDashboard'
+    }
 ];

@@ -1,5 +1,6 @@
 import React from 'react';
-import { MantineProvider, NotificationsProvider } from '@mantine/core';
+import { MantineProvider } from '@mantine/core';
+import { Notifications } from '@mantine/notifications';
 import { easyCodeTheme } from '../theme/easyCodeTheme';
 
 interface EasyCodeProviderProps {
@@ -12,10 +13,9 @@ export const EasyCodeProvider: React.FC<EasyCodeProviderProps> = ({
     theme = easyCodeTheme
 }) => {
     return (
-        <MantineProvider theme={theme} withGlobalStyles withNormalizeCSS>
-            <NotificationsProvider>
-                {children}
-            </NotificationsProvider>
+        <MantineProvider theme={theme}>
+            <Notifications />
+            {children}
         </MantineProvider>
     );
 };

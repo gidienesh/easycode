@@ -1,4 +1,5 @@
 import express, { Request, Response, NextFunction } from 'express';
+import cors from 'cors';
 import dotenv from 'dotenv';
 import tenantRoutes from './routes/tenantRoutes';
 
@@ -7,6 +8,8 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3002;
 
+// Enable CORS for all routes
+app.use(cors());
 app.use(express.json());
 
 app.get('/', (req: Request, res: Response) => {

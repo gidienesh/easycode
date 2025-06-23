@@ -5,28 +5,34 @@
   "scripts": {
     "dev": "set NPM_CONFIG_USER_AGENT=pnpm && next dev",
     "build": "next build",
+    "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
+    "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
+    "upload": "opennextjs-cloudflare build && opennextjs-cloudflare upload",
+    "cf-typegen": "wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts",
     "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
-    "@easycode/tenant-service": "workspace:*",
     "@easycode/ui-library": "workspace:*",
     "@emotion/react": "^11.0.0",
     "@emotion/server": "^11.0.0",
     "@emotion/styled": "^11.0.0",
-    "@mantine/core": "^7.17.8",
-    "@mantine/hooks": "^7.17.8",
-    "@mantine/notifications": "^7.17.8",
+    "@mantine/core": "^8.1.1",
+    "@mantine/hooks": "^8.1.1",
+    "@mantine/notifications": "^8.1.1",
+    "@tabler/icons-react": "^2.47.0",
     "next": "15.3.4",
     "react": "^18",
     "react-dom": "^18"
   },
   "devDependencies": {
+    "@opennextjs/cloudflare": "latest",
     "@types/node": "^20.19.1",
     "@types/react": "^18.3.23",
     "@types/react-dom": "^18.3.7",
     "eslint": "^8",
     "eslint-config-next": "15.3.4",
-    "typescript": "^5.8.3"
+    "typescript": "^5.8.3",
+    "wrangler": "^4.20.5"
   }
 }

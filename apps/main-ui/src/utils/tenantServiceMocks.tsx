@@ -1,4 +1,4 @@
-// Create mock data providers for tenant service components
+// Create mock data for tenant service components
 export const mockTenantData = {
     tenantId: 'test-tenant-123',
     features: [
@@ -11,11 +11,13 @@ export const mockTenantData = {
     }
 };
 
-// Wrap components with mock providers
-export const TenantServiceTestWrapper = ({ children }) => {
-    return (
-        <TenantDataProvider value={mockTenantData}>
-            {children}
-        </TenantDataProvider>
-    );
+// Mock tenant service functions
+export const mockTenantService = {
+    getTenantData: async (tenantId: string) => {
+        return mockTenantData;
+    },
+    updateTenantFeatures: async (tenantId: string, features: any[]) => {
+        console.log('Mock: Updating tenant features', { tenantId, features });
+        return { success: true };
+    }
 };

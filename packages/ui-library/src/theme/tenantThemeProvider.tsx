@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useMemo, ReactNode } from 'react';
-import { MantineProvider, MantineThemeOverride } from '@mantine/core';
+import { MantineThemeOverride } from '@mantine/core';
 
 // Tenant theme configuration interface
 export interface TenantTheme {
@@ -69,6 +69,7 @@ interface TenantThemeContextType {
   currentTenantId: string;
   currentTheme: TenantTheme;
   setTenantId: (tenantId: string) => void;
+  mantineTheme: MantineThemeOverride;
 }
 
 const TenantThemeContext = createContext<TenantThemeContextType | undefined>(undefined);
@@ -85,13 +86,24 @@ export function useTenantTheme() {
 // Convert tenant theme to Mantine theme
 function createMantineTheme(tenantTheme: TenantTheme): MantineThemeOverride {
   return {
-    colorScheme: tenantTheme.colorScheme,
     primaryColor: tenantTheme.primaryColor as any,
     fontFamily: tenantTheme.fontFamily,
-    radius: tenantTheme.borderRadius,
-    spacing: tenantTheme.spacing,
+    radius: {
+      xs: '4px',
+      sm: '6px',
+      md: '8px',
+      lg: '12px',
+      xl: '16px',
+    },
+    spacing: {
+      xs: '8px',
+      sm: '16px',
+      md: '24px',
+      lg: '32px',
+      xl: '48px',
+    },
     colors: {
-      ...tenantTheme.customColors,
+      brand: (tenantTheme.customColors?.brand || ['#E3F2FD', '#BBDEFB', '#90CAF9', '#64B5F6', '#42A5F5', '#2196F3', '#1E88E5', '#1976D2', '#1565C0', '#0D47A1']) as [string, string, string, string, string, string, string, string, string, string],
     },
     components: {
       Button: {
@@ -147,13 +159,12 @@ export function TenantThemeProvider({
     currentTenantId,
     currentTheme,
     setTenantId,
-  }), [currentTenantId, currentTheme, setTenantId]);
+    mantineTheme,
+  }), [currentTenantId, currentTheme, setTenantId, mantineTheme]);
   
   return (
     <TenantThemeContext.Provider value={contextValue}>
-      <MantineProvider theme={mantineTheme}>
-        {children}
-      </MantineProvider>
+      {children}
     </TenantThemeContext.Provider>
   );
 }

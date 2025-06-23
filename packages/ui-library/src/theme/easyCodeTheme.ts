@@ -1,12 +1,11 @@
 import { MantineThemeOverride } from '@mantine/core';
 
 export const easyCodeTheme: MantineThemeOverride = {
-  colorScheme: 'light',
   primaryColor: 'blue',
   fontFamily: 'Inter, sans-serif',
   headings: {
     fontFamily: 'Inter, sans-serif',
-    fontWeight: 600,
+    fontWeight: '600',
   },
   components: {
     Button: {
@@ -26,9 +25,4 @@ export const easyCodeTheme: MantineThemeOverride = {
       },
     },
   },
-  globalStyles: (theme) => ({
-    body: {
-      backgroundColor: theme.colors.gray[0],
-    },
-  }),
 };
