@@ -88,7 +88,10 @@ import {
   IconArrowsMaximize,
   IconFileCertificate,
   IconEye,
-  IconAlertCircle
+  IconAlertCircle,
+  IconBrandWhatsapp,
+  IconPhoneCall,
+  IconBug
 } from '@tabler/icons-react';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
@@ -108,22 +111,48 @@ const serviceConfig = {
     ]
   },
   'crm-service': {
-    name: 'Customer Relationship Management',
+    name: 'CRM',
     icon: IconBuilding,
     color: 'green',
-    features: [
-      { name: 'Leads', href: '/crm/leads', icon: IconTarget },
-      { name: 'Contacts', href: '/crm/contacts', icon: IconUsers },
-      { name: 'Accounts', href: '/crm/accounts', icon: IconBuilding },
-      { name: 'Opportunities', href: '/crm/opportunities', icon: IconBuildingStore },
-      { name: 'Activities', href: '/crm/activities', icon: IconActivity },
-      { name: 'Reports', href: '/crm/reports', icon: IconChartBar },
-      { name: 'Email Templates', href: '/crm/email-templates', icon: IconMail },
-      { name: 'SMS Templates', href: '/crm/sms-templates', icon: IconMessage },
-      { name: 'Call Logs', href: '/crm/call-logs', icon: IconPhone },
-      { name: 'Meeting Notes', href: '/crm/meeting-notes', icon: IconNote },
-      { name: 'WhatsApp Logs', href: '/crm/whatsapp-logs', icon: IconMessageCircle },
-      { name: 'Activity Feed', href: '/crm/activity-feed', icon: IconTimeline }
+    groups: [
+      {
+        label: 'Activity Feed',
+        items: [
+          { name: 'Activity Feed', href: '/crm/activity-feed', icon: IconTimeline }
+        ]
+      },
+      {
+        label: 'Pipelines',
+        items: [
+          { name: 'Leads', href: '/crm/leads', icon: IconTarget },
+          { name: 'Contacts', href: '/crm/contacts', icon: IconUsers },
+          { name: 'Accounts', href: '/crm/accounts', icon: IconBuilding },
+          { name: 'Opportunities', href: '/crm/opportunities', icon: IconBuildingStore },
+          { name: 'Reports', href: '/crm/reports', icon: IconChartBar }
+        ]
+      },
+      {
+        label: 'Engagements',
+        items: [
+          { name: 'Email', href: '/communications/email', icon: IconMail },
+          { name: 'WhatsApp', href: '/communications/whatsapp', icon: IconBrandWhatsapp },
+          { name: 'SMS', href: '/communications/sms', icon: IconMessageCircle },
+          { name: 'Phone Calls', href: '/communications/calls', icon: IconPhoneCall },
+          { name: 'Meetings', href: '/communications/meetings', icon: IconVideo },
+          { name: 'Templates', href: '/communications/templates', icon: IconFileText },
+          { name: 'Analytics', href: '/communications/analytics', icon: IconChartBar },
+          { name: 'Settings', href: '/communications/settings', icon: IconSettings }
+        ]
+      },
+      {
+        label: 'Planner',
+        items: [
+          { name: 'Calendar', href: '/planner/calendar', icon: IconCalendar },
+          { name: 'Tasks', href: '/planner/tasks', icon: IconChecklist },
+          { name: 'Notes', href: '/planner/notes', icon: IconNote },
+          { name: 'Reminders', href: '/planner/reminders', icon: IconBell }
+        ]
+      }
     ]
   },
   'project-management-service': {
@@ -151,20 +180,61 @@ const serviceConfig = {
     name: 'Equipment Maintenance',
     icon: IconTool,
     color: 'orange',
-    features: [
-      { name: 'Asset Registry', href: '/equipment/assets', icon: IconAsset },
-      { name: 'Work Orders', href: '/equipment/work-orders', icon: IconClipboardList },
-      { name: 'Preventive Maintenance', href: '/equipment/preventive', icon: IconCalendar },
-      { name: 'Corrective Maintenance', href: '/equipment/corrective', icon: IconTools },
-      { name: 'Checklists', href: '/equipment/checklists', icon: IconClipboardCheck },
-      { name: 'Service History', href: '/equipment/history', icon: IconHistory },
-      { name: 'Maintenance Schedule', href: '/equipment/schedule', icon: IconCalendarTime },
-      { name: 'Technicians', href: '/equipment/technicians', icon: IconUsers },
-      { name: 'Spare Parts', href: '/equipment/parts', icon: IconPackage },
-      { name: 'Reports', href: '/equipment/reports', icon: IconChartBar },
-      { name: 'Analytics', href: '/equipment/analytics', icon: IconTrendingUp },
-      { name: 'QR Codes', href: '/equipment/qr-codes', icon: IconSearch },
-      { name: 'Asset Types', href: '/equipment/asset-types', icon: IconDatabase }
+    groups: [
+      {
+        label: 'Maintenance Management',
+        items: [
+          { name: 'Dashboard', href: '/maintenance', icon: IconDashboard },
+          { name: 'Customer & Equipment', href: '/maintenance/customer-equipment', icon: IconBuilding },
+          { name: 'Maintenance Scheduler', href: '/maintenance/scheduler', icon: IconCalendar },
+          { name: 'Work Orders', href: '/maintenance/work-orders', icon: IconClipboardList }
+        ]
+      },
+      {
+        label: 'Equipment Checklists',
+        items: [
+          { name: 'Generator Maintenance', href: '/maintenance/generator-checklist', icon: IconTools },
+          { name: 'Air Conditioner', href: '/maintenance/ac-checklist', icon: IconGauge },
+          { name: 'Fire Equipment', href: '/maintenance/fire-checklist', icon: IconAlertCircle },
+          { name: 'HVAC System', href: '/maintenance/hvac-checklist', icon: IconGauge }
+        ]
+      },
+      {
+        label: 'Asset Management',
+        items: [
+          { name: 'Asset Registry', href: '/maintenance/assets', icon: IconAsset },
+          { name: 'Equipment Types', href: '/maintenance/equipment-types', icon: IconDatabase },
+          { name: 'Locations', href: '/maintenance/locations', icon: IconMapPin },
+          { name: 'QR Codes', href: '/maintenance/qr-codes', icon: IconSearch }
+        ]
+      },
+      {
+        label: 'Technician Management',
+        items: [
+          { name: 'Technicians', href: '/maintenance/technicians', icon: IconUsers },
+          { name: 'Skills & Certifications', href: '/maintenance/skills', icon: IconFileCertificate },
+          { name: 'Availability', href: '/maintenance/availability', icon: IconClock },
+          { name: 'Performance', href: '/maintenance/performance', icon: IconChartBar }
+        ]
+      },
+      {
+        label: 'Service & History',
+        items: [
+          { name: 'Service History', href: '/maintenance/history', icon: IconHistory },
+          { name: 'Preventive Maintenance', href: '/maintenance/preventive', icon: IconCalendar },
+          { name: 'Corrective Maintenance', href: '/maintenance/corrective', icon: IconTools },
+          { name: 'Spare Parts', href: '/maintenance/parts', icon: IconPackage }
+        ]
+      },
+      {
+        label: 'Reports & Analytics',
+        items: [
+          { name: 'Maintenance Reports', href: '/maintenance/reports', icon: IconChartBar },
+          { name: 'Cost Analysis', href: '/maintenance/costs', icon: IconReportMoney },
+          { name: 'Performance Analytics', href: '/maintenance/analytics', icon: IconTrendingUp },
+          { name: 'Compliance Reports', href: '/maintenance/compliance', icon: IconFileCertificate }
+        ]
+      }
     ]
   },
   'hr-service': {
@@ -318,7 +388,9 @@ interface NavigationProps {
 export function TenantNavigation({ opened, onToggle }: NavigationProps) {
   const { tenant, entitlements, loading } = useTenant();
   const { user, logout } = useUser();
-  const [expandedServices, setExpandedServices] = useState<string[]>([]);
+  const [expandedCrmGroup, setExpandedCrmGroup] = useState<string | null>(null);
+  const [expandedService, setExpandedService] = useState<string | null>(null);
+  const [expandedGroups, setExpandedGroups] = useState<string[]>([]);
   const theme = useMantineTheme();
   const router = useRouter();
   const pathname = router.asPath; // router.pathname is generally preferred for active checks with dynamic routes
@@ -334,7 +406,7 @@ export function TenantNavigation({ opened, onToggle }: NavigationProps) {
     );
   }
   
-  // Get enabled services
+  // Get enabled services from tenant entitlements
   const enabledServices = Object.entries(entitlements?.services || {})
     .filter(([_, config]) => config.enabled)
     .map(([serviceName, config]) => ({
@@ -344,34 +416,96 @@ export function TenantNavigation({ opened, onToggle }: NavigationProps) {
 
   // Get user's accessible services (intersection of tenant entitlements and user permissions)
  const accessibleServices = enabledServices.filter(service => {
+    // For equipment maintenance service, check if user has any maintenance permissions
+    if (service.name === 'equipment-maintenance-service') {
+      const hasAnyMaintenancePermission = user?.permissions.some(permission => 
+        permission.startsWith('equipment-maintenance-service:')
+      );
+      return hasAnyMaintenancePermission;
+    }
+    
     return service.config.modules.some(module => 
       user?.permissions.some(permission => 
         permission.startsWith(`${service.name}:${module.name}:`)
       )
     );
-  }); 
+  });
 
-  const toggleService = (serviceName: string) => {
-    setExpandedServices(prev =>
-      prev[0] === serviceName ? [] : [serviceName]
+  const toggleGroup = (serviceName: string, groupLabel: string) => {
+    const groupKey = `${serviceName}-${groupLabel}`;
+    setExpandedGroups(prev =>
+      prev[0] === groupKey ? [] : [groupKey]
     );
   };
 
-  const isServiceExpanded = (serviceName: string) => {
-    return expandedServices.includes(serviceName);
+  const isGroupExpanded = (serviceName: string, groupLabel: string) => {
+    const groupKey = `${serviceName}-${groupLabel}`;
+    return expandedGroups.includes(groupKey);
   };
 
   const getServiceFeatures = (serviceName: string) => {
     const service = serviceConfig[serviceName as keyof typeof serviceConfig];
     if (!service) return [];
 
-    // Filter features based on user permissions
-    return service.features.filter(feature => {
-      const moduleName = feature.name.toLowerCase().replace(/\s+/g, '-');
-      return user?.permissions.some(permission => 
-        permission.startsWith(`${serviceName}:${moduleName}:`)
-      );
-    });
+    // Handle grouped services (like CRM)
+    if ('groups' in service) {
+      const allItems: any[] = [];
+      service.groups.forEach(group => {
+        group.items.forEach(item => {
+          const moduleName = item.name.toLowerCase().replace(/\s+/g, '-');
+          if (user?.permissions.some(permission => 
+            permission.startsWith(`${serviceName}:${moduleName}:`)
+          )) {
+            allItems.push(item);
+          }
+        });
+      });
+      return allItems;
+    }
+
+    // Handle regular services with features
+    if ('features' in service) {
+      return service.features.filter(feature => {
+        const moduleName = feature.name.toLowerCase().replace(/\s+/g, '-');
+        return user?.permissions.some(permission => 
+          permission.startsWith(`${serviceName}:${moduleName}:`)
+        );
+      });
+    }
+
+    return [];
+  };
+
+  const HIDDEN_ENGAGEMENT_ITEMS = ['Analytics', 'Templates', 'Settings'];
+
+  const getServiceGroups = (serviceName: string) => {
+    const service = serviceConfig[serviceName as keyof typeof serviceConfig];
+    if (!service || !('groups' in service)) return [];
+
+    return service.groups.map(group => ({
+      ...group,
+      items: group.label === 'Engagements'
+        ? group.items.filter(item => !HIDDEN_ENGAGEMENT_ITEMS.includes(item.name) && user?.permissions.some(permission => permission.startsWith(`${serviceName}:${item.name.toLowerCase().replace(/\s+/g, '-')}:`)))
+        : group.items.filter(item => {
+            // For equipment maintenance service, show all items if user has any maintenance permissions
+            if (serviceName === 'equipment-maintenance-service') {
+              const hasAnyMaintenancePermission = user?.permissions.some(permission => 
+                permission.startsWith('equipment-maintenance-service:')
+              );
+              
+              // If user has any maintenance permission, show all items
+              if (hasAnyMaintenancePermission) {
+                return true;
+              }
+            }
+            
+            // Default permission matching for other services
+            const moduleName = item.name.toLowerCase().replace(/\s+/g, '-');
+            return user?.permissions.some(permission => 
+              permission.startsWith(`${serviceName}:${moduleName}:`)
+            );
+          })
+    })).filter(group => group.items.length > 0);
   };
 
   const handleNavigation = (href?: string) => { // href is optional now as NextLink will handle it
@@ -387,6 +521,16 @@ export function TenantNavigation({ opened, onToggle }: NavigationProps) {
     return pathname === href || pathname.startsWith(href + '/') || (href !== '/' && pathname.startsWith(href));
   };
 
+  // New handlers for CRM and service expansion
+  const handleCrmGroup = (groupLabel: string) => {
+    setExpandedService(null); // collapse all other services
+    setExpandedCrmGroup(prev => (prev === groupLabel ? null : groupLabel));
+  };
+  const handleService = (serviceName: string) => {
+    setExpandedCrmGroup(null); // collapse all CRM groups
+    setExpandedService(prev => (prev === serviceName ? null : serviceName));
+  };
+
   return (
     <AppShell.Navbar 
       p="md" 
@@ -396,52 +540,7 @@ export function TenantNavigation({ opened, onToggle }: NavigationProps) {
         overflowY: 'auto'
       }}
     >
-      {/* Header Section */}
-      <AppShell.Section>
-        <Stack gap="md">
-          {/* Tenant Info */}
-          {tenant && (
-            <Group>
-              <Avatar 
-                src={tenant.logoUrl} 
-                alt={tenant.name}
-                size="md"
-              >
-                {tenant.name.charAt(0)}
-              </Avatar>
-              <div>
-                <Text size="sm" fw={500} lineClamp={1}>
-                  {tenant.name}
-                </Text>
-                <Text size="xs" c="dimmed">
-                  {tenant.status}
-                </Text>
-              </div>
-            </Group>
-          )}
-          
-          {/* User Info */}
-          {user && (
-            <Group>
-              <Avatar 
-                src={user.avatar} 
-                alt={`${user.firstName} ${user.lastName}`}
-                size="sm"
-              >
-                {user.firstName.charAt(0)}
-              </Avatar>
-              <div>
-                <Text size="sm" fw={500} lineClamp={1}>
-                  {user.firstName} {user.lastName}
-                </Text>
-                <Text size="xs" c="dimmed">
-                  {user.role}
-                </Text>
-              </div>
-            </Group>
-          )}
-        </Stack>
-      </AppShell.Section>
+  
       
       <Divider my="md" />
       
@@ -464,72 +563,134 @@ export function TenantNavigation({ opened, onToggle }: NavigationProps) {
 
           <Divider my="xs" />
 
-          {/* Service Accordion Items */}
-          {accessibleServices.map((service) => {
-            const serviceInfo = serviceConfig[service.name as keyof typeof serviceConfig];
-            if (!serviceInfo) return null;
-
-            const features = getServiceFeatures(service.name);
-            const isExpanded = isServiceExpanded(service.name);
-            const hasFeatures = features.length > 0;
-            const servicePath = `/${service.name.replace('-service', '')}`;
-            const isServiceActive = isActive(servicePath);
-
-            return (
-              <Box key={service.name}>
-                <NavLink
-                  label={serviceInfo.name}
-                  leftSection={<serviceInfo.icon size="1.2rem" stroke={1.5} />}
-                  rightSection={
-                    hasFeatures ? (
-                      isExpanded ? (
-                        <IconChevronDown size="1rem" />
-                      ) : (
-                        <IconChevronRight size="1rem" />
-                      )
-                    ) : null
-                  }
-                  color={serviceInfo.color}
-                  active={isServiceActive && !hasFeatures} // Only active if no features to expand
-                  onClick={(e) => {
-                    if (hasFeatures) {
-                      e.preventDefault(); // Prevent navigation if it's an expandable parent
-                      toggleService(service.name);
-                    } else {
-                      // For NavLink as NextLink, onClick still fires.
-                      // We call handleNavigation to close mobile menu if needed.
-                      handleNavigation();
-                    }
-                  }}
-                  style={{
-                    cursor: 'pointer'
-                  }}
-                  // Conditionally add NextLink if it's a direct link
-                  {...(!hasFeatures && { component: NextLink, href: servicePath })}
-                />
-                
-                {hasFeatures && (
-                  <Collapse in={isExpanded}>
-                    <Box ml="md">
-                      {features.map((feature) => (
+          {/* CRM Section - always visible */}
+          {accessibleServices.some(s => s.name === 'crm-service') && (
+            <Box mt="md" mb="xs">
+              <Text size="xs" fw={700} c="green.7" mb="xs" tt="uppercase">CRM</Text>
+              {getServiceGroups('crm-service').map((group, groupIndex) => (
+                <Box key={groupIndex} mb="xs">
+                  <NavLink
+                    label={group.label}
+                    leftSection={<IconChevronRight size="1rem" />}
+                    rightSection={expandedCrmGroup === group.label ? <IconChevronDown size="1rem" /> : <IconChevronRight size="1rem" />}
+                    color="green"
+                    variant="light"
+                    onClick={e => {
+                      e.preventDefault();
+                      handleCrmGroup(group.label);
+                    }}
+                    style={{ cursor: 'pointer' }}
+                  />
+                  <Collapse in={expandedCrmGroup === group.label}>
+                    <Box ml="lg">
+                      {group.items.map((item) => (
                         <NavLink
-                          key={feature.href}
-                          label={feature.name}
-                          leftSection={<feature.icon size="1rem" stroke={1.5} />}
-                          href={feature.href}
+                          key={item.href}
+                          label={item.name}
+                          leftSection={<item.icon size="1rem" stroke={1.5} />}
+                          href={item.href}
                           component={NextLink}
-                          active={isActive(feature.href)}
+                          active={isActive(item.href)}
                           onClick={() => handleNavigation()}
-                          color={serviceInfo.color}
+                          color="green"
                           variant="light"
                         />
                       ))}
                     </Box>
                   </Collapse>
-                )}
-              </Box>
-            );
-          })}
+                </Box>
+              ))}
+            </Box>
+          )}
+    <Divider my="xs" />
+          {/* Other Services Section - always visible */}
+          {accessibleServices.some(s => s.name !== 'crm-service') && (
+            <Box mt="md" mb="xs">
+              <Text size="xs" fw={700} c="blue.7" mb="xs" tt="uppercase"></Text>
+              {accessibleServices.filter(s => s.name !== 'crm-service').map((service) => {
+                const serviceInfo = serviceConfig[service.name as keyof typeof serviceConfig];
+                if (!serviceInfo) return null;
+                const features = getServiceFeatures(service.name);
+                const groups = getServiceGroups(service.name);
+                const hasFeatures = features.length > 0;
+                const hasGroups = groups.length > 0;
+                const servicePath = `/${service.name.replace('-service', '')}`;
+                const isServiceActive = isActive(servicePath);
+                
+                return (
+                  <Box key={service.name} mb="xs">
+                    <NavLink
+                      label={serviceInfo.name}
+                      leftSection={<serviceInfo.icon size="1.2rem" stroke={1.5} />}
+                      color={serviceInfo.color}
+                      active={isServiceActive && !hasFeatures && !hasGroups}
+                      component={(!hasFeatures && !hasGroups) ? NextLink : undefined}
+                      href={(!hasFeatures && !hasGroups) ? servicePath : undefined}
+                      onClick={e => {
+                        if (hasFeatures || hasGroups) {
+                          e.preventDefault();
+                          handleService(service.name);
+                        } else {
+                          handleNavigation();
+                        }
+                      }}
+                      style={{ cursor: 'pointer' }}
+                      rightSection={(hasFeatures || hasGroups) ? (expandedService === service.name ? <IconChevronDown size="1rem" /> : <IconChevronRight size="1rem" />) : null}
+                    />
+                    {(hasGroups
+                      ? groups.map((group, groupIndex) => (
+                          <Box key={groupIndex} mb="xs">
+                            <NavLink
+                              label={group.label}
+                              leftSection={<IconChevronRight size="1rem" />}
+                              rightSection={isGroupExpanded(service.name, group.label) ? <IconChevronDown size="1rem" /> : <IconChevronRight size="1rem" />}
+                              color={serviceInfo.color}
+                              variant="light"
+                              onClick={e => {
+                                e.preventDefault();
+                                toggleGroup(service.name, group.label);
+                              }}
+                              style={{ cursor: 'pointer' }}
+                            />
+                            <Collapse in={expandedService === service.name && isGroupExpanded(service.name, group.label)}>
+                              <Box ml="lg">
+                                {group.items.map((item) => (
+                                  <NavLink
+                                    key={item.href}
+                                    label={item.name}
+                                    leftSection={<item.icon size="1rem" stroke={1.5} />}
+                                    href={item.href}
+                                    component={NextLink}
+                                    active={isActive(item.href)}
+                                    onClick={() => handleNavigation()}
+                                    color={serviceInfo.color}
+                                    variant="light"
+                                  />
+                                ))}
+                              </Box>
+                            </Collapse>
+                          </Box>
+                        ))
+                      : features.map((feature) => (
+                          <Collapse key={feature.href} in={expandedService === service.name}>
+                            <NavLink
+                              label={feature.name}
+                              leftSection={<feature.icon size="1rem" stroke={1.5} />}
+                              href={feature.href}
+                              component={NextLink}
+                              active={isActive(feature.href)}
+                              onClick={() => handleNavigation()}
+                              color={serviceInfo.color}
+                              variant="light"
+                            />
+                          </Collapse>
+                        ))
+                    )}
+                  </Box>
+                );
+              })}
+            </Box>
+          )}
         </Stack>
       </AppShell.Section>
       

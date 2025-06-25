@@ -7,7 +7,7 @@ export default function HomePage() {
 
   useEffect(() => {
     // Redirect to dashboard
-    router.replace('/dashboard');
+      router.replace('/dashboard');
   }, [router]);
 
   // Show a loading message while redirecting

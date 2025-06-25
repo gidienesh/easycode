@@ -82,18 +82,28 @@ class TenantService {
         'crm-service': {
           enabled: true,
           modules: [
+            // Pipelines
             { name: 'leads', enabled: true, permissions: ['read', 'write'] },
             { name: 'contacts', enabled: true, permissions: ['read', 'write'] },
             { name: 'accounts', enabled: true, permissions: ['read', 'write'] },
             { name: 'opportunities', enabled: true, permissions: ['read', 'write'] },
-            { name: 'activities', enabled: true, permissions: ['read', 'write'] },
             { name: 'reports', enabled: true, permissions: ['read', 'write'] },
-            { name: 'email-templates', enabled: true, permissions: ['read', 'write'] },
-            { name: 'sms-templates', enabled: true, permissions: ['read', 'write'] },
-            { name: 'call-logs', enabled: true, permissions: ['read', 'write'] },
-            { name: 'meeting-notes', enabled: true, permissions: ['read', 'write'] },
-            { name: 'whatsapp-logs', enabled: true, permissions: ['read', 'write'] },
             { name: 'activity-feed', enabled: true, permissions: ['read', 'write'] },
+            // Engagements
+            { name: 'email', enabled: true, permissions: ['read', 'write'] },
+            { name: 'whatsapp', enabled: true, permissions: ['read', 'write'] },
+            { name: 'sms', enabled: true, permissions: ['read', 'write'] },
+            { name: 'phone-calls', enabled: true, permissions: ['read', 'write'] },
+            { name: 'meetings', enabled: true, permissions: ['read', 'write'] },
+            { name: 'templates', enabled: true, permissions: ['read', 'write'] },
+            { name: 'analytics', enabled: true, permissions: ['read', 'write'] },
+            { name: 'settings', enabled: true, permissions: ['read', 'write'] },
+            // Planner
+            { name: 'calendar', enabled: true, permissions: ['read', 'write'] },
+            { name: 'tasks', enabled: true, permissions: ['read', 'write'] },
+            { name: 'activities', enabled: true, permissions: ['read', 'write'] },
+            { name: 'notes', enabled: true, permissions: ['read', 'write'] },
+            { name: 'reminders', enabled: true, permissions: ['read', 'write'] },
           ],
           features: ['lead-scoring', 'email-integration', 'reporting']
         },
@@ -218,7 +228,7 @@ class TenantService {
             { name: 'sms-notifications', enabled: tenantId.includes('premium'), permissions: ['read', 'write'] },
           ],
           features: ['template-management', 'scheduled-notifications', 'analytics']
-        }
+        },
       },
       features: ['dashboard', 'reporting', 'api-access'],
       limits: {

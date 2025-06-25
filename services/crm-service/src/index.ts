@@ -2,6 +2,7 @@ import express, { Request, Response, NextFunction } from 'express';
 import dotenv from 'dotenv';
 import activityRoutesV1 from './routes/v1/activityRoutes';
 import leadRoutesV1 from './routes/v1/leadRoutes';
+import communicationsRoutesV1 from './routes/v1/communicationsRoutes';
 // import other v1 routes as they are created
 
 dotenv.config();
@@ -18,6 +19,7 @@ app.get('/', (req: Request, res: Response) => {
 // Mount V1 routes
 app.use('/v1/activities', activityRoutesV1);
 app.use('/v1/leads', leadRoutesV1);
+app.use('/v1/communications', communicationsRoutesV1);
 // app.use('/v1/contacts', contactRoutesV1);
 // app.use('/v1/accounts', accountRoutesV1);
 

@@ -20,7 +20,7 @@ export default function App({ Component, pageProps }: AppProps) {
           }}
         >
           <AppLayout>
-            <Component {...pageProps} />
+          <Component {...pageProps} />
           </AppLayout>
         </TenantThemeProvider>
       </EasyCodeProvider>

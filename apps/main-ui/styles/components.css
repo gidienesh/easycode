@@ -394,4 +394,51 @@
   .table td {
     padding: var(--space-2) var(--space-3);
   }
+}
+
+/* Mantine DataTable tenant theming */
+.mantine-DataTable-root {
+  --tenant-table-header-bg: var(--mantine-primary-color-light, #f5f7fa);
+  --tenant-table-row-bg: var(--mantine-color-body, #fff);
+  --tenant-table-row-hover-bg: var(--mantine-primary-color-light-hover, #e6f0fa);
+  --tenant-table-border: var(--mantine-color-gray-3, #e9ecef);
+  --tenant-table-selected-bg: var(--mantine-primary-color-light, #e6f0fa);
+}
+
+.mantine-DataTable-table {
+  border: 1px solid var(--tenant-table-border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.mantine-DataTable-thead {
+  background: var(--tenant-table-header-bg);
+}
+
+.mantine-DataTable-th {
+  background: var(--tenant-table-header-bg);
+  color: var(--mantine-primary-color-filled, #1c7ed6);
+  font-weight: 600;
+  border-bottom: 1px solid var(--tenant-table-border);
+}
+
+.mantine-DataTable-tr {
+  background: var(--tenant-table-row-bg);
+  transition: background 0.2s;
+}
+
+.mantine-DataTable-tr[data-hovered] {
+  background: var(--tenant-table-row-hover-bg);
+}
+
+.mantine-DataTable-tr[data-selected] {
+  background: var(--tenant-table-selected-bg);
+}
+
+.mantine-DataTable-td {
+  border-bottom: 1px solid var(--tenant-table-border);
+}
+
+.mantine-DataTable-tfoot {
+  background: var(--tenant-table-header-bg);
 } 
