@@ -2,10 +2,5 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/finance/bank-reconciliation": "pages/finance/bank-reconciliation.js",
-  "/finance/balance-sheet": "pages/finance/balance-sheet.js",
-  "/finance/trial-balance": "pages/finance/trial-balance.js",
-  "/finance/income-statement": "pages/finance/income-statement.js",
-  "/finance/cash-flow": "pages/finance/cash-flow.js",
   "/finance/dashboards": "pages/finance/dashboards.js"
 }
