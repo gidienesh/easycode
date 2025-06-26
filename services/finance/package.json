@@ -1,7 +1,7 @@
 {
-  "name": "@easycode/finance-service",
+  "name": "@easycode/finance-legacy",
   "version": "1.0.0",
-  "description": "Finance management service for EasyCode ERP",
+  "description": "Finance management service for EasyCode ERP (Legacy)",
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
