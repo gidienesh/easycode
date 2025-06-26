@@ -1,17 +1,29 @@
 import React from 'react';
-import { MantineProvider } from '@mantine/core';
-import { Notifications } from '@mantine/notifications';
-import { EasyCodeProvider } from '@easycode/ui-library';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { EasyCodeProvider } from './lib/EasyCodeProvider';
+import { AppLayout } from './components/AppLayout';
+import { DynamicDashboard } from './components/DynamicDashboard';
+
+// Page imports
+import CrmPage from './pages/CrmPage';
+import FinancePage from './pages/FinancePage';
+import SettingsPage from './pages/SettingsPage';
 
 function App() {
     return (
-        <MantineProvider>
-            <Notifications />
-            <EasyCodeProvider>
-                {/* Next.js will handle the routing and layout */}
-                <div>Loading...</div>
-            </EasyCodeProvider>
-        </MantineProvider>
+        <EasyCodeProvider>
+            <Router>
+                <AppLayout>
+                    <Routes>
+                        <Route path="/" element={<DynamicDashboard />} />
+                        <Route path="/dashboard" element={<DynamicDashboard />} />
+                        <Route path="/crm/*" element={<CrmPage />} />
+                        <Route path="/finance/*" element={<FinancePage />} />
+                        <Route path="/settings" element={<SettingsPage />} />
+                    </Routes>
+                </AppLayout>
+            </Router>
+        </EasyCodeProvider>
     );
 }
 

@@ -1,18 +1,18 @@
 [build]
   base = "apps/main-ui"
   publish = "out"
-  command = "cd ../../ && pnpm install && cd apps/main-ui && cp next.config.netlify.js next.config.js && pnpm run build"
+  command = "cp package.netlify.json package.json && cp next.config.netlify.js next.config.js && npm install && npm run build"
 
 [build.environment]
   NODE_VERSION = "18"
-  PNPM_VERSION = "8"
   NETLIFY = "true"
 
-[[plugins]]
-  package = "@netlify/plugin-nextjs"
+# Force pnpm usage
+[build.processing]
+  skip_processing = false
 
 [dev]
-  command = "pnpm run dev"
+  command = "npm run dev"
   port = 3000
   publish = "out"
 
