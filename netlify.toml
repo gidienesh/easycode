@@ -1,11 +1,12 @@
 [build]
   base = "apps/main-ui"
   publish = "out"
-  command = "cp package.netlify.json package.json && cp next.config.netlify.js next.config.js && npm install && npm run build"
+  command = "cp package.netlify.json package.json && cp next.config.netlify.js next.config.js && npm install --workspaces=false --include-workspace-root=false && npm run build"
 
 [build.environment]
   NODE_VERSION = "18"
   NETLIFY = "true"
+  NPM_CONFIG_WORKSPACES = "false"
 
 # Force pnpm usage
 [build.processing]
