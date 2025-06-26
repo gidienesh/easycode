@@ -7,6 +7,15 @@
     "services/*",
     "packages/*"
   ],
+  "scripts": {
+    "dev": "concurrently \"pnpm run dev:ui\" \"pnpm run dev:projects\" \"pnpm run dev:finance\"",
+    "dev:ui": "cd apps/main-ui; pnpm dev",
+    "dev:projects": "cd services/project-management-service; pnpm dev",
+    "dev:finance": "cd services/finance-service; pnpm dev:api",
+    "build": "turbo build",
+    "lint": "turbo lint",
+    "test": "turbo test"
+  },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^7.18.0",
     "@typescript-eslint/parser": "^7.18.0",
@@ -16,7 +25,8 @@
     "prettier": "^3.3.3",
     "ts-node": "^10.9.2",
     "turbo": "^2.0.9",
-    "typescript": "^5.5.4"
+    "typescript": "^5.5.4",
+    "concurrently": "^8.2.0"
   },
   "dependencies": {
     "@faker-js/faker": "^9.8.0",

@@ -20,15 +20,35 @@ globalThis.__BUILD_MANIFEST = {
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-    "/maintenance": [
+    "/finance/balance-sheet": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/maintenance.js"
+      "static/chunks/pages/finance/balance-sheet.js"
     ],
-    "/maintenance/generator-checklist": [
+    "/finance/bank-reconciliation": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/maintenance/generator-checklist.js"
+      "static/chunks/pages/finance/bank-reconciliation.js"
+    ],
+    "/finance/cash-flow": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/finance/cash-flow.js"
+    ],
+    "/finance/dashboards": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/finance/dashboards.js"
+    ],
+    "/finance/income-statement": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/finance/income-statement.js"
+    ],
+    "/finance/trial-balance": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/finance/trial-balance.js"
     ]
   },
   "ampFirstPages": []

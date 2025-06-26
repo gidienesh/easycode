@@ -2,7 +2,8 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "noEmit": true,
-    "moduleResolution": "bundler",
+    "module": "esnext",
+    "moduleResolution": "node",
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
