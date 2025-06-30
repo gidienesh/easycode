@@ -24,8 +24,10 @@ export interface UserContextType {
   user: User | null;
   loading: boolean;
   error: string | null;
+  isAuthenticated: boolean;
   hasPermission: (service: string, module: string, action: string) => boolean;
   hasRole: (role: string) => boolean;
+  login: (userData: User) => void;
   refreshUser: () => void;
   logout: () => void;
 }
@@ -34,11 +36,27 @@ const UserContext = createContext<UserContextType | undefined>(undefined);
 
 // Mock user service for development
 class UserService {
-  async getCurrentUser(): Promise<User> {
+  async getCurrentUser(): Promise<User | null> {
+    // Check if user is stored in localStorage
+    const storedUser = localStorage.getItem('currentUser');
+    const authToken = localStorage.getItem('authToken');
+    
+    if (!authToken || !storedUser) {
+      return null;
+    }
+    
     // Simulate API call
     await new Promise(resolve => setTimeout(resolve, 300));
     
-    // Mock user data - in real app this would come from auth service
+    try {
+      return JSON.parse(storedUser);
+    } catch {
+      return null;
+    }
+  }
+  
+  async getDefaultUser(): Promise<User> {
+    // Fallback user data for development
     return {
       id: 'user-1',
       email: 'admin@demo.com',
@@ -217,9 +235,15 @@ export function UserProvider({ children }: { children: ReactNode }) {
       setError(null);
       
       const userData = await userService.getCurrentUser();
-      setUser(userData);
+      if (userData) {
+        setUser(userData);
+      } else {
+        // No stored user, user needs to login
+        setUser(null);
+      }
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to load user data');
+      setUser(null);
     } finally {
       setLoading(false);
     }
@@ -240,6 +264,10 @@ export function UserProvider({ children }: { children: ReactNode }) {
     return user?.role === role;
   };
   
+  const login = (userData: User) => {
+    setUser(userData);
+  };
+  
   const refreshUser = () => {
     loadUserData();
   };
@@ -248,6 +276,7 @@ export function UserProvider({ children }: { children: ReactNode }) {
     setUser(null);
     localStorage.removeItem('authToken');
     localStorage.removeItem('currentTenantId');
+    localStorage.removeItem('currentUser');
     // Redirect to login page
     window.location.href = '/login';
   };
@@ -257,8 +286,10 @@ export function UserProvider({ children }: { children: ReactNode }) {
       user,
       loading,
       error,
+      isAuthenticated: !!user,
       hasPermission,
       hasRole,
+      login,
       refreshUser,
       logout
     }}>
@@ -273,4 +304,4 @@ export function useUser() {
     throw new Error('useUser must be used within a UserProvider');
   }
   return context;
-} 
+}

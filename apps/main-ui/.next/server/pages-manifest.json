@@ -2,5 +2,7 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/finance/dashboards": "pages/finance/dashboards.js"
+  "/crm/contacts": "pages/crm/contacts.js",
+  "/finance": "pages/finance.js",
+  "/dashboard": "pages/dashboard.js"
 }

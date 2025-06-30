@@ -98,8 +98,29 @@ import { useRouter } from 'next/router';
 import { useTenant } from '../providers/TenantProvider';
 import { useUser } from '../providers/UserProvider';
 
+// Type definitions for service configuration
+interface ServiceFeature {
+  name: string;
+  href: string;
+  icon: any;
+}
+
+interface ServiceGroup {
+  label: string;
+  items: ServiceFeature[];
+}
+
+interface ServiceConfig {
+  name: string;
+  icon: any;
+  color: string;
+  href?: string; // Optional href for main service page
+  features?: ServiceFeature[];
+  groups?: ServiceGroup[];
+}
+
 // Enhanced service configuration with comprehensive features
-const serviceConfig = {
+const serviceConfig: Record<string, ServiceConfig> = {
   'user-service': {
     name: 'User Management',
     icon: IconUsers,
@@ -241,6 +262,7 @@ const serviceConfig = {
     name: 'Human Resources',
     icon: IconUsersGroup,
     color: 'cyan',
+    href: '/hr',
     features: [
       { name: 'Employees', href: '/hr/employees', icon: IconUsers },
       { name: 'Departments', href: '/hr/departments', icon: IconBuilding },
@@ -614,7 +636,7 @@ export function TenantNavigation({ opened, onToggle }: NavigationProps) {
                 const groups = getServiceGroups(service.name);
                 const hasFeatures = features.length > 0;
                 const hasGroups = groups.length > 0;
-                const servicePath = `/${service.name.replace('-service', '')}`;
+                const servicePath = serviceInfo.href || `/${service.name.replace('-service', '')}`;
                 const isServiceActive = isActive(servicePath);
                 
                 return (

@@ -1,5 +1,6 @@
 import React from 'react';
 import type { AppProps } from 'next/app';
+import { useRouter } from 'next/router';
 import { MantineProvider } from '@mantine/core';
 import { Notifications } from '@mantine/notifications';
 import { EasyCodeProvider, TenantThemeProvider } from '@easycode/ui-library';
@@ -9,6 +10,12 @@ import '../styles/globals.css';
 import '../styles/components.css';
 
 export default function App({ Component, pageProps }: AppProps) {
+  const router = useRouter();
+  
+  // Pages that should not have the AppLayout (dashboard structure)
+  const pagesWithoutLayout = ['/login'];
+  const shouldShowLayout = !pagesWithoutLayout.includes(router.pathname);
+
   return (
     <MantineProvider>
       <Notifications />
@@ -19,11 +26,15 @@ export default function App({ Component, pageProps }: AppProps) {
             console.log('Theme changed:', tenantId, theme);
           }}
         >
-          <AppLayout>
-          <Component {...pageProps} />
-          </AppLayout>
+          {shouldShowLayout ? (
+            <AppLayout>
+              <Component {...pageProps} />
+            </AppLayout>
+          ) : (
+            <Component {...pageProps} />
+          )}
         </TenantThemeProvider>
       </EasyCodeProvider>
     </MantineProvider>
   );
-} 
+}

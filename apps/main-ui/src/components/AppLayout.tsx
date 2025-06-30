@@ -46,4 +46,4 @@ export function AppLayout({ children }: AppLayoutProps) {
       </UserProvider>
     </TenantProvider>
   );
-} 
+}
